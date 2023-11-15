@@ -5,11 +5,11 @@ services:
     build:
       context: app
       dockerfile: Dockerfile
-    container_name: bot_coinpay
-    image: bot_coinpay
+    container_name: hh_bot
+    image: hh_bot
     restart: unless-stopped
     environment:
-      MONGODB_DATABASE: bot_coinpay
+      MONGODB_DATABASE: hh_bot
       MONGODB_USERNAME: user1
       MONGODB_PASSWORD: passw1
       MONGODB_HOSTNAME: mongodb
@@ -30,7 +30,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongodbuser
       MONGO_INITDB_ROOT_PASSWORD: passw1
-      MONGO_INITDB_DATABASE: bot_coinpay
+      MONGO_INITDB_DATABASE: hh_bot
       MONGODB_DATA_DIR: /data/db
       MONDODB_LOG_DIR: /dev/null
     ports:
