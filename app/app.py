@@ -9,11 +9,13 @@ from aiogram import Bot, Dispatcher, executor, types
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.errors import ConnectionFailure, DuplicateKeyError
 
+# mongo_url = (f"mongodb://{os.environ['MONGODB_USERNAME']}:{os.environ['MONGODB_PASSWORD']}"
+#              f"@{os.environ['MONGODB_HOSTNAME']}:27117/{os.environ['MONGODB_DATABASE']}")
+# client = AsyncIOMotorClient(mongo_url)
+# db = client.hh_bot
+# coll = db.users
 
-client = AsyncIOMotorClient(
-    f"mongodb+srv://{os.environ['MONGODB_USERNAME']}:{os.environ['MONGODB_PASSWORD']}"
-    f"@{os.environ['MONGODB_HOSTNAME']}:27117/{os.environ['MONGODB_DATABASE']}"
-)
+client = AsyncIOMotorClient(os.environ['MONGODB_HOSTNAME'])
 db = client.hh_bot
 coll = db.users
 

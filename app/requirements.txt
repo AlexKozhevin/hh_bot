@@ -16,10 +16,12 @@ itsdangerous==2.1.2
 Jinja2==3.1.2
 MarkupSafe==2.1.1
 multidict==6.0.2
-pymongo==4.1.1
+pymongo
 pytz==2022.1
 Werkzeug==2.1.2
 yarl==1.7.2
 zipp==3.8.0
 httpx
 motor
+beautifulsoup4
+bs4

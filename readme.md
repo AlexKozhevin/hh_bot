@@ -42,8 +42,8 @@ https://t.me/hh_job_finder_bot
 
 ### 4. MongoDB authentication (if you want to use your own user, modify ***docker-compose.yml*** file):
 
-    docker exec -it mongodb bash
-    mongo -u mongodbuser -p passw1
+    docker exec -it mongo_db bash
+    mongosh -u mongodbuser -p passw1
 #
     show dbs;
 
