@@ -1,0 +1,53 @@
+version: '3'
+services:
+
+  app:
+    build:
+      context: app
+      dockerfile: Dockerfile
+    container_name: bot_coinpay
+    image: bot_coinpay
+    restart: unless-stopped
+    environment:
+      MONGODB_DATABASE: bot_coinpay
+      MONGODB_USERNAME: user1
+      MONGODB_PASSWORD: passw1
+      MONGODB_HOSTNAME: mongodb
+      TOKEN: <<TOKEN>>
+    volumes:
+      - appdata:/var/www/
+    depends_on:
+      - mongodb
+    networks:
+      - frontend
+      - backend
+
+  mongodb:
+    image: mongo:4.0.8
+    container_name: mongodb
+    restart: unless-stopped
+    command: mongod --auth
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongodbuser
+      MONGO_INITDB_ROOT_PASSWORD: passw1
+      MONGO_INITDB_DATABASE: bot_coinpay
+      MONGODB_DATA_DIR: /data/db
+      MONDODB_LOG_DIR: /dev/null
+    ports:
+      - "27118:27117"
+    volumes:
+      - mongodbdata:/data/db
+    networks:
+      - backend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+volumes:
+  mongodbdata:
+    driver: local
+  appdata:
+    driver: local
