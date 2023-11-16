@@ -186,7 +186,7 @@ async def get_vacancy_hh(message):
             vacancy_old = user.get("urls")
             words = "+".join(qs).lower()
             urls = [
-                f"https://hh.ru/search/vacancy?area={city_id}&order_by=publication_time&ored_clusters=true&text={words}&search_period=30"
+                f"https://hh.ru/search/vacancy?area={city_id}&order_by=publication_time&ored_clusters=true&text={words}&search_period=30&search_field=name"
             ]
             error_msg = "Сайт hh.ru не отвечает"
             for url in urls:
