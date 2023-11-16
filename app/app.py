@@ -69,9 +69,7 @@ async def stop(message: types.Message):
         print("STOP TASK")
     except Exception as e:
         print(e)
-    coll.update_one(
-        {"_id": message.chat.id}, {"$set": {"user_pair": "", "user_timer": ""}}
-    )
+
     await message.answer(
         "Вы остановили поиск вакансий! Введите новые ключевые слова для продолжения!"
     )
@@ -188,7 +186,7 @@ async def get_vacancy_hh(message):
             vacancy_old = user.get("urls")
             words = "+".join(qs).lower()
             urls = [
-                f"https://hh.ru/search/vacancy?area={city_id}&text={words}&order_by=publication_time"
+                f"https://hh.ru/search/vacancy?area={city_id}&order_by=publication_time&ored_clusters=true&text={words}&search_period=30"
             ]
             error_msg = "Сайт hh.ru не отвечает"
             for url in urls:
