@@ -15,7 +15,7 @@ from pymongo.errors import ConnectionFailure, DuplicateKeyError
 # db = client.hh_bot
 # coll = db.users
 
-client = AsyncIOMotorClient(os.environ['MONGODB_HOSTNAME'])
+client = AsyncIOMotorClient(os.environ["MONGODB_HOSTNAME"])
 db = client.hh_bot
 coll = db.users
 
@@ -38,6 +38,8 @@ headers = [
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     },
 ]
+
+user_tasks = {}
 
 
 @dp.message_handler(commands=["start", "help"])
@@ -65,7 +67,8 @@ async def send_welcome(message: types.Message):
 async def stop(message: types.Message):
     await coll.update_one({"_id": message.chat.id}, {"$set": {"qs": []}})
     try:
-        task.cancel()
+        user_id = message.chat.id
+        user_tasks[user_id].cancel()
         print("STOP TASK")
     except Exception as e:
         print(e)
@@ -84,13 +87,18 @@ async def delete(message: types.Message):
 
 @dp.message_handler(regexp="@")
 async def main(message):
-    global task
-    try:
-        task.cancel()
-        print("Canceled previous task")
-    except Exception as e:
-        print(e)
-    task = asyncio.create_task(send_vacancy(message))
+    global user_tasks
+    user_id = message.chat.id
+
+    if user_id in user_tasks:
+        try:
+            user_tasks[user_id].cancel()
+        except asyncio.CancelledError:
+            pass
+        except Exception as e:
+            print(e)
+
+    user_tasks[user_id] = asyncio.create_task(send_vacancy(message))
 
 
 @dp.message_handler()
@@ -186,7 +194,8 @@ async def get_vacancy_hh(message):
             vacancy_old = user.get("urls")
             words = "+".join(qs).lower()
             urls = [
-                f"https://hh.ru/search/vacancy?area={city_id}&order_by=publication_time&ored_clusters=true&text={words}&search_period=30&search_field=name"
+                f"https://hh.ru/search/vacancy?area={city_id}&order_by=publication_time&"
+                f"ored_clusters=true&text={words}&search_period=30&search_field=name"
             ]
             error_msg = "Сайт hh.ru не отвечает"
             for url in urls:
