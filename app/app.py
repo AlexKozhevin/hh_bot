@@ -22,6 +22,7 @@ coll = db.users
 TOKEN = os.environ.get("TOKEN")
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
+admin_id = os.environ.get("ADMIN_ID")
 
 headers = [
     {
@@ -117,6 +118,7 @@ async def send_vacancy(message):
             await get_vacancy_hh(message)
         except Exception as e:
             print(f"Critical error: {str(e)}")
+            await bot.send_message(admin_id, str(e))
     else:
         await message.answer(
             "You have entered an invalid request. Try again. For help, send /help"

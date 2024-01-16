@@ -15,6 +15,7 @@ services:
 #      MONGODB_HOSTNAME: mongodb
       MONGODB_HOSTNAME: mongodb+srv://alex:alcatell@cluster0.pjnfg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
       TOKEN: 6914689569:AAGCja0jmasA8oy_BtzG3YTPjwquKJ3VWlE
+      ADMIN_ID: 468131964
     volumes:
       - appdata:/var/www/
 #    depends_on:
