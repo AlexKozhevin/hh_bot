@@ -206,7 +206,7 @@ async def get_vacancy_hh(message):
                         "div", attrs={"class": "vacancy-serp-item-body__main-info"}
                     )
                     for div in main_div:
-                        link = div.find("a", attrs={"class": "serp-item__title"})
+                        link = div.find("a", attrs={"class": "bloko-link"})
                         vacancy.append(link["href"].split("?")[0])
                 else:
                     await message.answer(error_msg)
